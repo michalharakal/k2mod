@@ -39,9 +39,6 @@ class KModDockerTest {
     // When running in Docker, the JAVA_SLAVE_HOST environment variable should be set to the hostname of the Java slave container
     private val host = System.getenv("JAVA_SLAVE_HOST") ?: "localhost"
 
-    // Flag to indicate if we're running in Docker environment
-    private val isDockerEnvironment = System.getenv("JAVA_SLAVE_HOST") != null
-
     // The connection to the Modbus TCP slave
     private var connection: TCPMasterConnection? = null
 
@@ -111,14 +108,18 @@ class KModDockerTest {
         // Create the request
         val request = ReadMultipleRegistersRequest(registerAddress, registerCount)
         request.setUnitID(unitId)
+        logger.debug("Created request: address=$registerAddress, count=$registerCount, unitId=$unitId")
 
         // Execute the transaction
         val transaction = ModbusTCPTransaction(connection!!)
         transaction.request = request
+        logger.debug("Executing Modbus TCP transaction...")
         transaction.execute()
+        logger.debug("Transaction executed successfully")
 
         // Get the response
         val response = transaction.response as ReadMultipleRegistersResponse
+        logger.debug("Received response with unit ID: ${response.getUnitID()}")
 
         // Verify the response
         assertNotNull(response, "Response should not be null")
@@ -127,6 +128,12 @@ class KModDockerTest {
         val registers = response.getRegisters()
         assertNotNull(registers, "Registers should not be null")
         assertEquals(registerCount, registers.size, "Should have received the requested number of registers")
+
+        logger.debug("Received ${registers.size} registers")
+        registers.forEachIndexed { index, register ->
+            logger.debug("Register[$index] value: ${register.getValue()}")
+        }
+
         assertEquals(expectedRegisterValue, registers[0].getValue(), "Register value should match")
 
         logger.info("Successfully read register value: ${registers[0].getValue()}")

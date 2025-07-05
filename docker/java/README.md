@@ -1,13 +1,15 @@
-# Running the Java Modbus Slave Locally
+# Running the Java Modbus Slave
 
-This directory contains a simple Java application that starts a Modbus TCP slave for testing purposes. This slave can be used to test the KModDockerTest locally without Docker.
+This directory contains a simple Java application that starts a Modbus TCP slave for testing purposes. This slave can be used to test the KModDockerTest locally or with Docker.
 
-## Prerequisites
+## Running Locally
+
+### Prerequisites
 
 - JDK 11 or higher
 - Maven 3.6 or higher
 
-## Running the Java Modbus Slave
+### Running the Java Modbus Slave
 
 To run the Java Modbus slave locally, follow these steps:
 
@@ -47,6 +49,38 @@ Once the Java Modbus slave is running, you can run the KModDockerTest against it
 
 4. The test should connect to the locally running Java Modbus slave and pass.
 
+## Running with Docker
+
+### Prerequisites
+
+- Docker installed on your system
+
+### Using the CLI Dockerfile
+
+This repository includes a Dockerfile.cli that can be used to run the ModbusSlaveApp in a Docker container:
+
+1. Navigate to the `docker/java` directory:
+   ```bash
+   cd docker/java
+   ```
+
+2. Build the Docker image:
+   ```bash
+   docker build -t modbus-slave-app -f Dockerfile.cli .
+   ```
+
+3. Run the Docker container:
+   ```bash
+   docker run -p 1502:1502 modbus-slave-app
+   ```
+
+4. The Modbus slave will start on port 1502 inside the container, and the port is mapped to the host machine.
+
+5. To stop the container, press Ctrl+C or run:
+   ```bash
+   docker stop $(docker ps -q --filter ancestor=modbus-slave-app)
+   ```
+
 ## Troubleshooting
 
 If you encounter issues, check the following:
@@ -55,3 +89,4 @@ If you encounter issues, check the following:
 2. Check if there are any firewall rules blocking the connection.
 3. Verify that the KModDockerTest is configured to connect to "localhost" on port 1502.
 4. If you're running the test on a different machine, update the host in the KModDockerTest to point to the IP address of the machine running the Java Modbus slave.
+5. When using Docker, ensure that port 1502 is properly mapped from the container to the host.
