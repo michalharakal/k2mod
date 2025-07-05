@@ -1,0 +1,61 @@
+[versions]
+kotlin = "2.1.21"
+compose-multiplatform = "1.8.2"
+coroutines = "1.10.2"
+
+kotlinxSerialization = "1.8.1"
+androidGradlePlugin = "8.10.1"
+koin = "4.1.0"
+slf4j = "2.0.17"
+jetbrainsAnnotation = "26.0.2"
+
+commonsIo = "2.19.0"
+commonsNet = "3.11.1"
+
+junit = "4.13.2"
+logback = "1.5.18"
+mockk = "1.14.2"
+hamcrest = "3.0"
+
+j2mod = "3.2.1"
+
+moduleGraphSouza = "0.12.0"
+
+gradleVersionsPlugin = "0.52.0"
+kover = "0.9.1"
+
+
+[libraries]
+commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
+commons-net = { module = "commons-net:commons-net", version.ref = "commonsNet" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+androidx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+javax-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrainsAnnotation" }
+
+
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+modbus-j2mod = { group = "com.ghgande", name = "j2mod", version.ref = "j2mod" }
+
+
+slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
+
+[plugins]
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+gradleVersionsPlugin = { id = "com.github.ben-manes.versions", version.ref = "gradleVersionsPlugin" }
+modulegraph-souza = { id = "dev.iurysouza.modulegraph", version.ref = "moduleGraphSouza" }
