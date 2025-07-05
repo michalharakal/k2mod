@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  java-slave:
+    build:
+      context: ./java
+    container_name: j2mod-slave
+    ports:
+      - "1502:1502"
+    networks:
+      - modbus-network
+    environment:
+      - SLAVE_MODE=true
+
+  kotlin-master:
+    build:
+      context: ..
+      dockerfile: docker/kotlin/Dockerfile
+    container_name: kmod-master
+    depends_on:
+      - java-slave
+    networks:
+      - modbus-network
+    volumes:
+      - ../test-results:/app/test-results
+    environment:
+      - JAVA_SLAVE_HOST=java-slave
+      - JAVA_SLAVE_PORT=1502
+
+  k-mod-test:
+    build:
+      context: ..
+      dockerfile: docker/kotlin/Dockerfile
+    container_name: kmod-test
+    depends_on:
+      - java-slave
+    networks:
+      - modbus-network
+    volumes:
+      - ../test-results:/app/test-results
+    environment:
+      - JAVA_SLAVE_HOST=java-slave
+      - JAVA_SLAVE_PORT=1502
+    command: ["./gradlew", "jvmTest", "--tests", "com.ghgande.kmod.test.docker.KModDockerTest"]
+
+networks:
+  modbus-network:
+    driver: bridge
