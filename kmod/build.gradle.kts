@@ -62,6 +62,8 @@ kotlin {
                 implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
                 implementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
                 implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0")
+                implementation("org.apache.logging.log4j:log4j-api:2.20.0")
+                implementation("org.apache.logging.log4j:log4j-core:2.20.0")
                 implementation("org.apache.commons:commons-exec:1.3")
                 implementation(libs.modbus.j2mod)
             }
